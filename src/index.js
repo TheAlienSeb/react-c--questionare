@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import '.styes/styles.css';
+import '.styes/styles.scss';
+import '../node_modules/@mdi/font/css/materialdesignicons.min.css';
+import '../node_modules/materialize-css/dist/css/materialize.min.js';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

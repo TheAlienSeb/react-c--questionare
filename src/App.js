@@ -1,23 +1,18 @@
+import React from 'react';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
+
+import home from './components/home';
+import Quizinsrtuctions from './components/quiz/Quizinstructions';
+import play from './components/quiz/play'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello From react
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Route path="/" exact component>{home}</Route>
+      <Route path="/play/instructions" exact component={Quizinsrtuctions} />
+      <Route path="/play/quiz" exact component={Quizinsrtuctions} />
+    </Router>
   );
 }
 
