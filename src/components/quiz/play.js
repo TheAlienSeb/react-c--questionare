@@ -1,4 +1,5 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { Helmet } from "react-helmet";
 import M from 'materialize-css';
 import classNames from 'classnames'; 
@@ -6,6 +7,7 @@ import classNames from 'classnames';
 
 import questions from '../../questions.json';
 import isEmpty from "../../utils/is-empty";
+import Home from "../home"; 
 
 class Play extends Component {
     constructor(props) {
@@ -30,15 +32,18 @@ class Play extends Component {
         previousRandomNumbers: [], 
         time: {}
       };
-      this.interval = null
+      this.interval = null; 
     }
-  
+
     componentDidMount() {
       const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
       this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
       this.startTimer(); 
     }
   
+    componentWillUnmount() {
+        clearInterval(this.interval); 
+    }
 
     displayQuestions = (questions = this.state.questions,currentQuestion,nextQuestion,previousQuestion) => {
         let { currentQuestionIndex } = this.state;
@@ -63,6 +68,16 @@ class Play extends Component {
         }
     };
 
+    handleGoToHome = () => {
+        const { navigate } = this.props; 
+        navigate('/');  
+    }
+
+    handleGoToSummary = ( playerStats ) => {
+        const { navigate } = this.props; 
+        navigate('/play/quizSummary', {state: { playerStats }}); 
+    }
+
     handleNextOptionClick = () => {
         if (this.state.nextQuestion != undefined) {
             this.setState(prevState => ({currentQuestionIndex: prevState.currentQuestionIndex + 1}), 
@@ -78,9 +93,9 @@ class Play extends Component {
     };
 
     handleEndEarlyOptionClick = () => {
-        if (window.confirm('Are you sure you want to quit?')) {
-            this.props.history.push('/'); 
-        }
+            if (window.confirm('Are you sure you want to quit?')) {
+                this.handleGoToHome(); 
+            }
     }; 
 
     handleButtonClick = (e) => {
@@ -101,9 +116,9 @@ class Play extends Component {
 
     handleOptionClick = (e) => {
         if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
-            this.correctAnswer();
+            this.correctAnswer(); 
         } else {
-            this.wrongAnswer();
+            this.wrongAnswer(); 
         }
     }
 
@@ -119,7 +134,12 @@ class Play extends Component {
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
             numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
         }), () => {
-            this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion);
+            if (this.state.nextQuestion === undefined) {
+                this.endGame(); 
+            }
+            else {
+                this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion);
+            }
         });
  }
 
@@ -136,7 +156,12 @@ class Play extends Component {
         currentQuestionIndex: prevState.currentQuestionIndex + 1,
         numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
     }), () => {
-        this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion);
+        if (this.state.nextQuestion === undefined) {
+            this.endGame(); 
+        }
+        else {
+            this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion);       
+        }
     });
 }
 
@@ -237,8 +262,7 @@ startTimer = () => {
                     seconds: 0
                 }
             }, () => {
-                alert('Quiz has ended!');
-                this.props.history.push('/'); 
+                this.endGame();  
             }); 
         }
         else {
@@ -275,6 +299,23 @@ handleDisableButton = () => {
     }
 }
 
+endGame = () => {
+    alert('Quiz has ended!'); 
+    const { state } = this; 
+    const playerStats = {
+        score: state.score, 
+        numberOfQuestions: state.numberOfQuestions, 
+        numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
+        correctAnswers: state.correctAnswers, 
+        wrongAnswers: state.wrongAnswers, 
+        fiftyFiftyUsed: 2 - state.fiftyFifty, 
+        hintsUsed: 5 - state.hints
+    }; 
+    console.log(playerStats); 
+    setTimeout(() => {
+        this.handleGoToSummary(playerStats);
+    }, 1000);
+}
     render() {
         const { currentQuestion, currentQuestionIndex, fiftyFifty, hints, numberOfQuestions, time } = this.state;
 
@@ -315,8 +356,8 @@ handleDisableButton = () => {
                             <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionD}</p>
                         </div>
                         <div className="button-container">
-                            <button className={classnames('', {'disable': this.state.previousButtonDisabled})} id="previous-button" onClick={this.handleButtonClick}>Previous</button>
-                            <button className={classnames('', {'disable': this.state.nextButtonDisabled})} id="next-button" onClick={this.handleButtonClick}>Next</button>
+                            <button className={classNames('', {'disable': this.state.previousButtonDisabled})} id="previous-button" onClick={this.handleButtonClick}>Previous</button>
+                            <button className={classNames('', {'disable': this.state.nextButtonDisabled})} id="next-button" onClick={this.handleButtonClick}>Next</button>
                             <button id="end-early-button" onClick={this.handleButtonClick}>End Early</button>
                         </div>
                     </div>
@@ -325,5 +366,30 @@ handleDisableButton = () => {
     }
 }
 
+const PlayWrapper = () => {
+    const navigate = useNavigate();
 
-export default Play;
+    const handleGoToHomeWrapper = () => {
+        navigate('/'); 
+    };
+
+    const handleGoToSummaryWrapper = (playerStats) => {
+        navigate('/play/quizSummary', { state: { playerStats } });
+    } 
+
+    const playRef = React.useRef(); 
+
+    return (
+        <div>
+            <Play 
+                navigate={navigate}
+                onGoToHome={handleGoToHomeWrapper}
+                onGoToSummary={handleGoToSummaryWrapper}
+                ref={playRef}
+                />
+        </div>
+    ); 
+}
+
+
+export default PlayWrapper;
