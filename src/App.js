@@ -1,17 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
-import home from './components/home';
-import Quizinsrtuctions from './components/quiz/Quizinstructions';
-import play from './components/quiz/play'
+import Home from './components/home';
+import QuizInstructions from './components/quiz/Quizinstructions';
+import Play from './components/quiz/play';
 
 function App() {
   return (
-    <Router>
-      <Route path="/" exact component>{home}</Route>
-      <Route path="/play/instructions" exact component={Quizinsrtuctions} />
-      <Route path="/play/quiz" exact component={Quizinsrtuctions} />
+    <Router basename="/github.io/react-c--questionare">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/play/instructions" element={<QuizInstructions />} />
+        <Route path="/play/quiz" element={<Play />} />
+      </Routes>
     </Router>
   );
 }

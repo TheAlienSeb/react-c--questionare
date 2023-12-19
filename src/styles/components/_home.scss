@@ -1,92 +1,89 @@
+@import '../base/setting';
+
 #home {
-    background-image: url('../../assets/img/background.jpg');
+    background-image: url('../../assests/img/background.jpg');
     background-size: cover;
     background-position: center;
-    display:flex;
+    display: flex;
     justify-content: space-around;
-    height:100vh;
-    width:100vw;
+    height: 100vh;
+    width: 100vw;
 
-    
-section {
-    background-color: rgba(0,0,0,0.7);
-    padding-left: $md;
-    padding-right: $md;
-    height: 80%;
-    width: 55%;
-    border-radius: 5px;
-}
-.cube {
-    font-size: 8rem;
-    color: $orange;
+    section {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding-left: $md;
+        padding-right: $md;
+        height: 80%;
+        width: 55%;
+        border-radius: 5px;
 
-    }
-h1 {
-    font-size: $lg;
-    text-align: center;
-    color: $off-white;
-    }
+        .cube {
+            font-size: 8rem;
+            color: $orange;
+        }
 
-    .play-button-container {
-        width: 100%;
+        h1 {
+            font-size: $lg;
+            text-align: center;
+            color: $off-white;
+        }
 
-    }
+        .play-button-container {
+            width: 100%;
 
-    .play-button{
-        background-color: $green;
-        color: #fff;
-        display: block;
-        cursor: pointer;
-        padding: $normal;
-        border-radius: $button-radius;
-        text-align: center;
-        transition: 0.3s linear all;
+            .play-button {
+                background-color: $green;
+                color: #fff;
+                display: block;
+                cursor: pointer;
+                padding: $normal;
+                border-radius: $button-radius;
+                text-align: center;
+                transition: 0.3s linear all;
 
-    }
-    .play-button:hover {
-        background-color: darken($green, 10%);
-        box-shadow: $shadow;
-    }
-    #login-button:hover {
-        background-color: darken(red, 10%);
-        box-shadow: $shadow;
-    }
-    #signup-button:hover {
-        background-color: darken(blue, 10%);
-        box-shadow: $shadow;
-    }
-    .auth-container {
-        width:100%;
-        display: flex;
-        justify-content: space-between;
-        margin-top: $lg;
+                &:hover {
+                    background-color: darken($green, 10%);
+                    box-shadow: $shadow;
+                }
+            }
+        }
 
-    }
-    #login-button{
-        background-color: red;
+        .auth-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: $lg;
 
-    }
-    #signup-button{
-        background-color: blue;
+            #login-button {
+                background-color: red;
+            }
 
-    }
-    .auth-contatiner .auth-buttons{
-        color:#fff;
-        cursor: pointer;
-        border-radius: $button-radius;
-        padding:$normal 0;
-        text-align: center;
-        width: 45%;
-        transition: 0.3s linear all;
+            #signup-button {
+                background-color: blue;
+            }
+
+            .auth-buttons {
+                color: #fff;
+                cursor: pointer;
+                border-radius: $button-radius;
+                padding: $normal 0;
+                text-align: center;
+                width: 45%;
+                transition: 0.3s linear all;
+
+                &:hover {
+                    background-color: darken($green, 10%);
+                    box-shadow: $shadow;
+                }
+            }
+        }
     }
 }
 
-
-@media (max-width: 768px) {
+@media (max-width: $md-breakpoint) {
     #home section {
         padding: 0 $normal;
-        width:100%;
+        width: 100%;
         height: 100%;
-
     }
 }

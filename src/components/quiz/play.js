@@ -1,36 +1,33 @@
-import React, {Fragment, component} from "react";
-import {Helmet} from "react-helmet";
-
-
-import questions from '../../questions.json'
+import React, { Fragment, Component } from "react";
+import { Helmet } from "react-helmet";
+import questions from '../../questions.json';
 import isEmpty from "../../utils/is-empty";
 
-class play extends component {
-    constructor (props) {
-        super(props);
-        this.state * {
-            questions,
-            currentQuestion: {},
-            nextQuestion: {},
-            previousQuestion: {},
-            answer: '',
-            numberOfQuestions: 0,
-            numberOfAnsweredQuestions: 0,
-            currentQuestionIndex: 0,
-            score: 0,
-            correctAnswers: 0,
-            wrongAnswers:0,
-            hints: 5,
-            time: {}
-        };
-    
+class Play extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        questions,
+        currentQuestion: {},
+        nextQuestion: {},
+        previousQuestion: {},
+        answer: '',
+        numberOfQuestions: 0,
+        numberOfAnsweredQuestions: 0,
+        currentQuestionIndex: 0,
+        score: 0,
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        hints: 5,
+        time: {}
+      };
     }
-
-    conponentDidMount () {
-        const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
-        this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
-
+  
+    componentDidMount() {
+      const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
+      this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
     }
+  
 
     displayQuestions = (questions = this.state.questions,currentQuestion,nextQuestion,previousQuestion) => {
         let { currentQuestionIndex } = this.state;
@@ -94,4 +91,4 @@ class play extends component {
 }
 
 
-export default play;
+export default Play;

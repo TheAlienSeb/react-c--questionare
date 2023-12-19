@@ -1,24 +1,21 @@
+@import '../base/setting';
+
 .questions {
     background-color: $off-white;
-    border-left: 5px solid blue;
+    border-left: 5px solid $blue; // Updated to use $blue variable
     width: 80%;
     margin: $lg auto 0 auto;
     padding: $sm $md;
 
+    .lifeline-container {
+        display: flex;
+        justify-content: space-around;
+    }
 
-.lifeline-container{
-    display: flex;
-    justify-content: space-around;
-
-
-}
-
-
-.lifeline{
-    position: relative;
-    top: -3px;
-
-}
+    .lifeline {
+        position: relative;
+        top: -3px;
+    }
 
     h5 {
         font-size: 1.2rem;
@@ -27,34 +24,44 @@
         text-align: center;
     }
 
-    .options-container {
-        display:inline-block;
-        width:50%;
+    .timer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        .left {
+            display: flex;
+            align-items: center;
+        }
+    
+        .right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
     }
 
-    .options {
-        background-color: blue;
+    .options-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .option {
+        background-color: $blue; // Use the correct variable
         border-radius: $button-radius;
         color: wheat;
         cursor: pointer;
-        margin: $md auto;
+        margin: $md;
         padding: $normal;
         transition: 0.3s linear all;
         text-align: center;
-        width: 90%;
+        width: 40%;
 
+        &:hover {
+            background-color: darken($blue, 10%);
+        }
     }
-
-
-    .option:hover {
-        background-color: darken($color: blue, $amount: 10%);
-    }
-
-
-
-
-
-
 }
 
 .button-container {
@@ -63,47 +70,41 @@
     margin: 0 auto $sm auto;
     cursor: pointer;
     padding: $md;
-    width:80%;
-}
+    width: 80%;
 
-.button-container button {
-    border: none;
-    color: $off-white;
-    cursor: pointer;
-    margin-right: $md;
-    padding: $xs $sm;
-}
+    button {
+        border: none;
+        color: $off-white;
+        cursor: pointer;
+        margin-right: $md;
+        padding: $xs $sm;
+        transition: 0.2s linear all;
+    }
 
+    button:first-child {
+        background-color: darken($blue, 10%);
+        box-shadow: $shadow;
 
-.button-container button:first-child {
-    background-color: darken($color: blue, $amount: 10%);
-    box-shadow: $shadow;
-    transition: 0.2s linear all;
-}
-.button-container button:nth-child(2) {
-    background-color: darken($color: green, $amount: 10%);
-    box-shadow: $shadow;
-    transition: 0.2s linear all;
-}
+        &:hover {
+            background-color: darken($blue, 20%);
+        }
+    }
 
-.button-container button:last-child {
-    background-color: darken($color: red, $amount: 10%);
-    box-shadow: $shadow;
-    transition: 0.2s linear all;
-}
+    button:nth-child(2) {
+        background-color: darken($green, 10%);
+        box-shadow: $shadow;
 
+        &:hover {
+            background-color: darken($green, 20%);
+        }
+    }
 
+    button:last-child {
+        background-color: darken($red, 10%); // Updated to use $red variable
+        box-shadow: $shadow;
 
-.button-container button:first-child:hover {
-    background-color: darken($color: blue, $amount: 20%);
-}
-
-.button-container button:nth-child(2):hover {
-    background-color: darken($color: green, $amount: 20%);
-}
-
-
-
-.button-container button:last-child:hover {
-    background-color: darken($color: red, $amount: 20%);
+        &:hover {
+            background-color: darken($red, 20%);
+        }
+    }
 }
