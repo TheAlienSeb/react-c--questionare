@@ -1,0 +1,110 @@
+@import '../base/setting';
+
+.questions {
+    background-color: $off-white;
+    border-left: 5px solid $blue; // Updated to use $blue variable
+    width: 80%;
+    margin: $lg auto 0 auto;
+    padding: $sm $md;
+
+    .lifeline-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .lifeline {
+        position: relative;
+        top: -3px;
+    }
+
+    h5 {
+        font-size: 1.2rem;
+        margin-bottom: $lg;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .timer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        .left {
+            display: flex;
+            align-items: center;
+        }
+    
+        .right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .options-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .option {
+        background-color: $blue; // Use the correct variable
+        border-radius: $button-radius;
+        color: wheat;
+        cursor: pointer;
+        margin: $md;
+        padding: $normal;
+        transition: 0.3s linear all;
+        text-align: center;
+        width: 40%;
+
+        &:hover {
+            background-color: darken($blue, 10%);
+        }
+    }
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 auto $sm auto;
+    cursor: pointer;
+    padding: $md;
+    width: 80%;
+
+    button {
+        border: none;
+        color: $off-white;
+        cursor: pointer;
+        margin-right: $md;
+        padding: $xs $sm;
+        transition: 0.2s linear all;
+    }
+
+    button:first-child {
+        background-color: darken($blue, 10%);
+        box-shadow: $shadow;
+
+        &:hover {
+            background-color: darken($blue, 20%);
+        }
+    }
+
+    button:nth-child(2) {
+        background-color: darken($green, 10%);
+        box-shadow: $shadow;
+
+        &:hover {
+            background-color: darken($green, 20%);
+        }
+    }
+
+    button:last-child {
+        background-color: darken($red, 10%); // Updated to use $red variable
+        box-shadow: $shadow;
+
+        &:hover {
+            background-color: darken($red, 20%);
+        }
+    }
+}

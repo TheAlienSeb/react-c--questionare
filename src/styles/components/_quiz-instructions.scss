@@ -1,0 +1,54 @@
+@import '../base/setting';
+
+
+
+.instructions {
+    border: 1px solid darken($off-white, 10%);
+    border-radius: 5px;
+    margin-top: $lg;
+    margin-bottom: $lg;
+    padding: $sm $lg;
+
+    h1 {
+        color: $off-black;
+        font-size: $md;
+        text-align: center;
+    }
+
+    // Add button styling
+    div {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            a {
+                display: inline-block;
+                padding: $normal;
+                background-color: $green;
+                color: #fff;
+                text-decoration: none;
+                border-radius: $button-radius;
+                transition: 0.3s linear all;
+
+                &:hover {
+                    background-color: darken($green, 10%);
+                    box-shadow: $shadow;
+                }
+
+                &.right {
+                    background-color: darken($blue, 10%); // Change to your desired color
+                    &:hover {
+                        background-color: darken($blue, 20%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $md-breakpoint) {
+    .instructions img {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}

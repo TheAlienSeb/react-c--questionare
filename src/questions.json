@@ -1,0 +1,125 @@
+[
+    {
+      "question": "What is the correct way to declare a pointer in C++?",
+      "optionA": "int* ptr;",
+      "optionB": "int ptr*;",
+      "optionC": "int ptr;",
+      "optionD": "pointer int;",
+      "answer": "int* ptr;"
+    },
+    {
+      "question": "Which keyword is used to dynamically allocate memory in C++?",
+      "optionA": "malloc",
+      "optionB": "new",
+      "optionC": "allocate",
+      "optionD": "create",
+      "answer": "new"
+    },
+    {
+      "question": "What is the purpose of the 'const' keyword in C++?",
+      "optionA": "Declare a constant variable",
+      "optionB": "Indicate a variable is optional",
+      "optionC": "Specify a variable is temporary",
+      "optionD": "Enable variable reassignment",
+      "answer": "Declare a constant variable"
+    },
+    {
+      "question": "Which of the following is a valid C++ comment?",
+      "optionA": "// This is a comment",
+      "optionB": "/* This is a comment */",
+      "optionC": "# This is a comment",
+      "optionD": "-- This is a comment",
+      "answer": "// This is a comment"
+    },
+    {
+      "question": "What does the 'cin' object in C++ handle?",
+      "optionA": "Output",
+      "optionB": "File input",
+      "optionC": "Console input",
+      "optionD": "Error handling",
+      "answer": "Console input"
+    },
+
+    {
+      "question": "Which C++ keyword is used to define a class?",
+      "optionA": "struct",
+      "optionB": "class",
+      "optionC": "type",
+      "optionD": "define",
+      "answer": "class"
+    },
+    {
+      "question": "What is the purpose of the 'virtual' keyword in C++?",
+      "optionA": "Declare a variable",
+      "optionB": "Indicate a pure virtual function",
+      "optionC": "Enable function overloading",
+      "optionD": "Specify a constant",
+      "answer": "Indicate a pure virtual function"
+    },
+    {
+      "question": "Which C++ feature is used to achieve polymorphism through a base class pointer?",
+      "optionA": "Inheritance",
+      "optionB": "Encapsulation",
+      "optionC": "Abstraction",
+      "optionD": "Templates",
+      "answer": "Inheritance"
+    },
+    {
+      "question": "What is the correct syntax for a C++ constructor?",
+      "optionA": "void constructor()",
+      "optionB": "~Constructor()",
+      "optionC": "Constructor::Constructor()",
+      "optionD": "Constructor()",
+      "answer": "Constructor::Constructor()"
+    },
+    {
+      "question": "In C++, what is the purpose of the 'const' qualifier in a member function?",
+      "optionA": "Prevent function overloading",
+      "optionB": "Indicate the function is constant",
+      "optionC": "Enable function templates",
+      "optionD": "Declare a constant variable",
+      "answer": "Indicate the function is constant"
+    },
+
+    
+        {
+          "question": "What is the purpose of the 'friend' keyword in C++?",
+          "optionA": "Declare a function as a friend of a class",
+          "optionB": "Define a friend class",
+          "optionC": "Indicate a private function",
+          "optionD": "Enable function overloading",
+          "answer": "Declare a function as a friend of a class"
+        },
+        {
+          "question": "Which C++ standard library header is used for input and output operations?",
+          "optionA": "#include <iostream>",
+          "optionB": "#include <stdio.h>",
+          "optionC": "#include <string>",
+          "optionD": "#include <fstream>",
+          "answer": "#include <iostream>"
+        },
+        {
+          "question": "What is the purpose of the 'typeid' operator in C++?",
+          "optionA": "Determine the type of an object",
+          "optionB": "Check if a type is defined",
+          "optionC": "Convert between types",
+          "optionD": "Define a new type",
+          "answer": "Determine the type of an object"
+        },
+        {
+          "question": "In C++, what is a reference variable?",
+          "optionA": "A variable declared with the 'var' keyword",
+          "optionB": "An alias for another variable",
+          "optionC": "A constant variable",
+          "optionD": "A variable with a fixed value",
+          "answer": "An alias for another variable"
+        },
+        {
+          "question": "What is the purpose of the 'static' keyword in C++?",
+          "optionA": "Allocate memory dynamically",
+          "optionB": "Make a variable global",
+          "optionC": "Specify a constant",
+          "optionD": "Declare a static function",
+          "answer": "Make a variable global"
+        }
+      ]
