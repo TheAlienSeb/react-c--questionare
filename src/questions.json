@@ -5,7 +5,7 @@
       "optionB": "int ptr*;",
       "optionC": "int ptr;",
       "optionD": "pointer int;",
-      "answer": "int* ptr"
+      "answer": "int* ptr;"
     },
     {
       "question": "Which keyword is used to dynamically allocate memory in C++?",
