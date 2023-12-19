@@ -11,41 +11,46 @@ import Home from "../home";
 
 class Play extends Component {
     constructor(props) {
-      super(props);
-      this.state = {
-        questions,
-        currentQuestion: {},
-        nextQuestion: {},
-        previousQuestion: {},
-        answer: '',
-        numberOfQuestions: 0,
-        numberOfAnsweredQuestions: 0,
-        currentQuestionIndex: 0,
-        score: 0,
-        correctAnswers: 0,
-        wrongAnswers: 0,
-        hints: 5,
-        fiftyFifty: 2, 
-        usedFiftyFifty: false,
-        nextButtonDisabled: false,
-        previousButtonDisabled: true,
-        previousRandomNumbers: [], 
-        time: {}
-      };
-      this.interval = null; 
+        super(props);
+        this.state = {
+            questions,
+            currentQuestion: {},
+            nextQuestion: {},
+            previousQuestion: {},
+            answer: '',
+            numberOfQuestions: 0,
+            numberOfAnsweredQuestions: 0,
+            currentQuestionIndex: 0,
+            score: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            hints: 5,
+            fiftyFifty: 2,
+            usedFiftyFifty: false,
+            nextButtonDisabled: false,
+            previousButtonDisabled: true,
+            previousRandomNumbers: [],
+            time: {},
+        };
+        this.interval = null;
     }
 
     componentDidMount() {
-      const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
-      this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
-      this.startTimer(); 
-    }
-  
-    componentWillUnmount() {
-        clearInterval(this.interval); 
+        const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
+        this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
+        this.startTimer();
     }
 
-    displayQuestions = (questions = this.state.questions,currentQuestion,nextQuestion,previousQuestion) => {
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    displayQuestions = (
+        questions = this.state.questions,
+        currentQuestion,
+        nextQuestion,
+        previousQuestion
+    ) => {
         let { currentQuestionIndex } = this.state;
         if (!isEmpty(this.state.questions)) {
             questions = this.state.questions;
@@ -57,13 +62,13 @@ class Play extends Component {
                 currentQuestion,
                 nextQuestion,
                 previousQuestion,
-                numberOfQuestions:questions.length,
+                numberOfQuestions: questions.length,
                 answer,
                 usedFiftyFifty: false,
-                previousRandomNumbers: []
+                previousRandomNumbers: [],
             }, () => {
-                this.showOptions(); 
-                this.handleDisableButton(); 
+                this.showOptions();
+                this.handleDisableButton();
             });
         }
     };
@@ -79,14 +84,14 @@ class Play extends Component {
     }
 
     handleNextOptionClick = () => {
-        if (this.state.nextQuestion != undefined) {
+        if (this.state.nextQuestion !== undefined) {
             this.setState(prevState => ({currentQuestionIndex: prevState.currentQuestionIndex + 1}), 
             () => {this.displayQuestions(this.state.state, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion);});
         } 
     };
 
     handlePreviousOptionClick = () => {
-        if (this.state.previousQuestion != undefined) {
+        if (this.state.previousQuestion !== undefined) {
             this.setState(prevState => ({currentQuestionIndex: prevState.currentQuestionIndex - 1}), 
             () => {this.displayQuestions(this.state.state, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion);});
         }
@@ -178,16 +183,16 @@ handleHints = () => {
         let indexOfAnswer; 
 
         options.forEach((option, index) => {
-            if (option.innerHTML.toLowerCase() == this.state.answer.toLowerCase()) {
+            if (option.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
                 indexOfAnswer = index; 
             }
         }); 
 
         while (true) {
             const randomNum = Math.round(Math.random() * 3); 
-            if (randomNum != indexOfAnswer && !this.state.previousRandomNumbers.includes(randomNum)) {
+            if (randomNum !== indexOfAnswer && !this.state.previousRandomNumbers.includes(randomNum)) {
                 options.forEach((option, index) => {
-                    if (index == randomNum) {
+                    if (index === randomNum) {
                         option.style.visibility = 'hidden'; 
                         this.setState((prevState) => ({
                             hints: prevState.hints - 1,
@@ -203,13 +208,13 @@ handleHints = () => {
 };
 
 handleFiftyFifty = () => {
-    if (this.state.fiftyFifty > 0 && this.state.usedFiftyFifty == false) {
+    if (this.state.fiftyFifty > 0 && this.state.usedFiftyFifty === false) {
         const options = document.querySelectorAll('.option'); 
         const randomNums = []; 
         let indexOfAnswer; 
 
         options.forEach((option, index) => {
-            if (option.innerHTML.toLowerCase() == this.state.answer.toLowerCase()) {
+            if (option.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
                 indexOfAnswer = index; 
             }
         });
@@ -217,7 +222,7 @@ handleFiftyFifty = () => {
         let count = 0; 
         do {
             const randomNum = Math.round(Math.random() * 3); 
-            if (randomNum != indexOfAnswer) {
+            if (randomNum !== indexOfAnswer) {
                 if (randomNums.length < 2 && !randomNums.includes(randomNum) && !randomNums.includes(indexOfAnswer)) {
                     randomNums.push(randomNum); 
                     count++; 

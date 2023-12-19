@@ -1,0 +1,88 @@
+@import '../base/setting';
+
+.quiz-summary {
+    background-color: $off-white;
+    width: 80%;
+    margin: $lg auto;
+    padding: $md;
+
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: $md;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: $lg;
+
+        h4 {
+            font-size: 1.5rem;
+            margin-bottom: $md;
+        }
+
+        .stat {
+            font-size: 1rem;
+            margin-bottom: $sm;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .stat-left {
+            font-weight: bold; // Example styling for left-aligned stats
+        }
+
+        .stat-right {
+            color: $green; // Example styling for right-aligned stats
+        }
+    }
+
+    .success-icon {
+        color: $green; // Example styling for the success icon
+        font-size: 2rem;
+
+        .mdi-check-circle-outline {
+            color: $blue;
+            font-size: 2rem;
+        }
+    }
+
+    section {
+        display: flex;
+        justify-content: space-around;
+        margin-top: $lg;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: $md;
+
+            li {
+                a {
+                    display: block;
+                    padding: $sm;
+                    background-color: $blue;
+                    color: $off-white;
+                    text-decoration: none;
+                    border-radius: $button-radius;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: darken($blue, 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    .no-stats {
+        font-size: 1.5rem;
+        color: $gray; // Example styling for the "No Statistics Available" message
+    }
+}
