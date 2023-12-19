@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from "react";
 import { Helmet } from "react-helmet";
 import M from 'materialize-css';
+import classNames from 'classnames'; 
 
 
 import questions from '../../questions.json';
@@ -22,13 +23,20 @@ class Play extends Component {
         correctAnswers: 0,
         wrongAnswers: 0,
         hints: 5,
+        fiftyFifty: 2, 
+        usedFiftyFifty: false,
+        nextButtonDisabled: false,
+        previousButtonDisabled: true,
+        previousRandomNumbers: [], 
         time: {}
       };
+      this.interval = null
     }
   
     componentDidMount() {
       const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
       this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
+      this.startTimer(); 
     }
   
 
@@ -45,8 +53,49 @@ class Play extends Component {
                 nextQuestion,
                 previousQuestion,
                 numberOfQuestions:questions.length,
-                answer
+                answer,
+                usedFiftyFifty: false,
+                previousRandomNumbers: []
+            }, () => {
+                this.showOptions(); 
+                this.handleDisableButton(); 
             });
+        }
+    };
+
+    handleNextOptionClick = () => {
+        if (this.state.nextQuestion != undefined) {
+            this.setState(prevState => ({currentQuestionIndex: prevState.currentQuestionIndex + 1}), 
+            () => {this.displayQuestions(this.state.state, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion);});
+        } 
+    };
+
+    handlePreviousOptionClick = () => {
+        if (this.state.previousQuestion != undefined) {
+            this.setState(prevState => ({currentQuestionIndex: prevState.currentQuestionIndex - 1}), 
+            () => {this.displayQuestions(this.state.state, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion);});
+        }
+    };
+
+    handleEndEarlyOptionClick = () => {
+        if (window.confirm('Are you sure you want to quit?')) {
+            this.props.history.push('/'); 
+        }
+    }; 
+
+    handleButtonClick = (e) => {
+        switch (e.target.id) {
+            case 'next-button':
+                this.handleNextOptionClick();
+                break;
+            case 'previous-button':
+                this.handlePreviousOptionClick();
+                break;
+            case 'end-early-button':
+                this.handleEndEarlyOptionClick(); 
+                break; 
+            default:
+                break;
         }
     };
 
@@ -91,8 +140,143 @@ class Play extends Component {
     });
 }
 
+showOptions = () => {
+    const options = Array.from(document.querySelectorAll('.option')); 
+    options.forEach(option => {
+        option.style.visibility = 'visible'; 
+    }); 
+}
+
+handleHints = () => {
+    if (this.state.hints > 0) {
+        const options = Array.from(document.querySelectorAll('.option')); 
+        let indexOfAnswer; 
+
+        options.forEach((option, index) => {
+            if (option.innerHTML.toLowerCase() == this.state.answer.toLowerCase()) {
+                indexOfAnswer = index; 
+            }
+        }); 
+
+        while (true) {
+            const randomNum = Math.round(Math.random() * 3); 
+            if (randomNum != indexOfAnswer && !this.state.previousRandomNumbers.includes(randomNum)) {
+                options.forEach((option, index) => {
+                    if (index == randomNum) {
+                        option.style.visibility = 'hidden'; 
+                        this.setState((prevState) => ({
+                            hints: prevState.hints - 1,
+                            previousRandomNumbers: prevState.previousRandomNumbers.concat(randomNum)
+                        }));
+                    }
+                }); 
+                break; 
+            }
+            if (this.state.previousRandomNumbers.length >= 3) break; 
+        }
+    }
+};
+
+handleFiftyFifty = () => {
+    if (this.state.fiftyFifty > 0 && this.state.usedFiftyFifty == false) {
+        const options = document.querySelectorAll('.option'); 
+        const randomNums = []; 
+        let indexOfAnswer; 
+
+        options.forEach((option, index) => {
+            if (option.innerHTML.toLowerCase() == this.state.answer.toLowerCase()) {
+                indexOfAnswer = index; 
+            }
+        });
+
+        let count = 0; 
+        do {
+            const randomNum = Math.round(Math.random() * 3); 
+            if (randomNum != indexOfAnswer) {
+                if (randomNums.length < 2 && !randomNums.includes(randomNum) && !randomNums.includes(indexOfAnswer)) {
+                    randomNums.push(randomNum); 
+                    count++; 
+                }
+                 else {
+                    while (true) {
+                        const newRandomNum = Math.round(Math.random() * 3); 
+                        if (!randomNums.includes(randomNum) && !randomNums.includes(indexOfAnswer)) {
+                            randomNums.push(newRandomNum); 
+                            count++; 
+                            break; 
+                        }
+                    }
+                }
+            }
+        } while (count < 2); 
+        options.forEach((option, index) => {
+            if (randomNums.includes(index)) {
+                option.style.visibility = 'hidden'; 
+            }
+        });
+        this.setState(prevState => ({
+            fiftyFifty: prevState.fiftyFifty - 1, 
+            usedFiftyFifty: true
+        }));
+    }
+}
+
+startTimer = () => {
+    const countDownTime = Date.now() + 180000; 
+    this.interval = setInterval(() => {
+        const now = new Date(); 
+        const distance = countDownTime - now; 
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance < 0) {
+            clearInterval(this.interval); 
+            this.setState({
+                time: {
+                    minutes: 0, 
+                    seconds: 0
+                }
+            }, () => {
+                alert('Quiz has ended!');
+                this.props.history.push('/'); 
+            }); 
+        }
+        else {
+            this.setState({
+                time: {
+                    minutes,
+                    seconds
+                }
+            });
+        }
+    }, 1000);
+}
+
+handleDisableButton = () => {
+    if (this.state.previousQuestion === undefined || this.state.currentQuestionIndex === 0) {
+        this.setState({
+            previousButtonDisabled: true 
+        }); 
+    }
+    else {
+        this.setState({
+            previousButtonDisabled: false
+        }); 
+    }
+    if (this.state.nextQuestion === undefined || this.state.currentQuestionIndex + 1 === this.state.numberOfQuestions) {
+        this.setState({
+            nextButtonDisabled: true 
+        }); 
+    }
+    else {
+        this.setState({
+            nextButtonDisabled: false
+        }); 
+    }
+}
+
     render() {
-        const { currentQuestion, currentQuestionIndex, numberOfQuestions } = this.state;
+        const { currentQuestion, currentQuestionIndex, fiftyFifty, hints, numberOfQuestions, time } = this.state;
 
         return(
             <Fragment>
@@ -101,16 +285,21 @@ class Play extends Component {
                     </Helmet>
                     <div className="questions">
                         <div className="lifeline-container">
+                            <p> 
+                                <span onClick = {this.handleFiftyFifty} className="mdi mdi-set-center mdi-24px lifeline-icon">
+                                    <span className="lifeline">{fiftyFifty}</span>
+                                </span>
+                            </p>
                             <p>
-                                <span className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon"></span>
-                                <span className="lifeline">5</span>
-                            
+                                <span onClick = {this.handleHints} className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon">
+                                    <span className="lifeline">{hints}</span>    
+                                </span>        
                             </p>
                         </div>
                         <div className="timer-container">
                             <p>
                                 <span className="left" style={{float: 'left'}}>{currentQuestionIndex + 1} of {numberOfQuestions}</span>
-                                <span className="right" style={{float: 'right'}}>2:15
+                                <span className="right" style={{float: 'right'}}>{time.minutes}:{time.seconds}
                                     <span className="mdi mdi-clock-outline mdi-24px"></span>
                                 </span>
                                 
@@ -126,9 +315,9 @@ class Play extends Component {
                             <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionD}</p>
                         </div>
                         <div className="button-container">
-                            <button>Previous</button>
-                            <button>Next</button>
-                            <button>End Early</button>
+                            <button className={classnames('', {'disable': this.state.previousButtonDisabled})} id="previous-button" onClick={this.handleButtonClick}>Previous</button>
+                            <button className={classnames('', {'disable': this.state.nextButtonDisabled})} id="next-button" onClick={this.handleButtonClick}>Next</button>
+                            <button id="end-early-button" onClick={this.handleButtonClick}>End Early</button>
                         </div>
                     </div>
             </Fragment>
